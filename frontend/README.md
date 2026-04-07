@@ -15,11 +15,18 @@ npm install
 ```
 
 ### Ambiente de Desenvolvimento
-Para executar a aplicação em modo de desenvolvimento com hot-reload:
+Para executar a aplicação em modo de desenvolvimento com atualização automática (hot-reload):
 ```bash
 npm run dev
 ```
-A aplicação estará acessível em http://localhost:5173 por padrão.
+A aplicação estará acessível em `http://localhost:5173` por padrão.
+
+### Ambiente de Produção
+Para realizar o build e executar a versão otimizada:
+```bash
+npm run build
+npm start
+```
 
 ## Protocolo de Comunicação
-A interface está configurada para realizar requisições assíncronas ao back-end através do endpoint POST http://localhost:8000/predict. É imperativo que o serviço de back-end esteja operacional para o funcionamento da predição.
+A interface está configurada para realizar requisições assíncronas ao back-end por meio do endpoint `POST http://localhost:8000/predict`. É imperativo que o serviço de back-end esteja operacional para o funcionamento da predição.
