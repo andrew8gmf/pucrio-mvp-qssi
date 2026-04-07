@@ -17,20 +17,25 @@ app.add_middleware(
 )
 
 # 1. CARGA DO MODELO (Item 4 do Trabalho)
-# O modelo é servido de forma embarcada (carregado na inicialização)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "modelo_dass42_final.pkl")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
 model = None
+MODEL_PATH = "Não identificado"
 
 @app.on_event("startup")
 def load_model():
-    global model
+    global model, MODEL_PATH
     try:
-        if os.path.exists(MODEL_PATH):
-            model = joblib.load(MODEL_PATH)
-            print(">>> SUCESSO: Pipeline do Modelo Carregado com Sucesso!")
+        if os.path.exists(MODELS_DIR):
+            pkl_files = [f for f in os.listdir(MODELS_DIR) if f.endswith('.pkl')]
+            if pkl_files:
+                MODEL_PATH = os.path.join(MODELS_DIR, pkl_files[0])
+                model = joblib.load(MODEL_PATH)
+                print(f">>> SUCESSO: Modelo {pkl_files[0]} carregado!")
+            else:
+                print(f">>> AVISO: Nenhum arquivo .pkl encontrado em {MODELS_DIR}")
         else:
-            print(f">>> AVISO: Arquivo {MODEL_PATH} não encontrado.")
+            print(f">>> AVISO: Diretório {MODELS_DIR} não encontrado.")
     except Exception as e:
         print(f">>> ERRO ao carregar o modelo: {e}")
 

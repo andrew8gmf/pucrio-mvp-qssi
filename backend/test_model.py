@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 
 # Caminhos
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "modelo_dass42_final.pkl")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
 DATA_PATH = os.path.join(BASE_DIR, "..", "archive", "data.csv")
 
 def test_model_performance():
@@ -13,9 +13,14 @@ def test_model_performance():
     Assegura que o modelo atenda aos requisitos de desempenho estabelecidos.
     Requisito: Acurácia deve ser superior a 40% (considerando 5 classes e features subjetivas).
     """
-    # 1. Carregar modelo
-    assert os.path.exists(MODEL_PATH), "Arquivo do modelo não encontrado para teste."
+    # 1. Carregar modelo dinamicamente
+    assert os.path.exists(MODELS_DIR), f"Diretório {MODELS_DIR} não encontrado."
+    pkl_files = [f for f in os.listdir(MODELS_DIR) if f.endswith('.pkl')]
+    assert len(pkl_files) > 0, "Nenhum arquivo de modelo .pkl encontrado para teste."
+    
+    MODEL_PATH = os.path.join(MODELS_DIR, pkl_files[0])
     model = joblib.load(MODEL_PATH)
+    print(f"Testando modelo: {pkl_files[0]}")
     
     # 2. Carregar dados de teste (usaremos uma amostra do dataset original)
     df = pd.read_csv(DATA_PATH, sep='\t').head(500)
