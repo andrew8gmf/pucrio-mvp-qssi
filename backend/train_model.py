@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 # Caminhos
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "..", "archive", "data.csv")
-MODEL_SAVE_PATH = os.path.join(BASE_DIR, "models", "modelo_dass42_final.pkl")
+MODEL_SAVE_PATH = os.path.join(BASE_DIR, "models", "data.pkl")
 
 def train_official_model():
     print("\n" + "="*50)
